@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="he">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Speed Compass</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="heading">
+    <span id="headingDeg">---°</span><span id="headingDir"></span>
+  </header>
+
+  <main class="stage">
+    <div class="plane" id="plane">
+      <svg id="dial" viewBox="-500 -500 1000 1000" aria-hidden="true">
+        <!-- fixed (non-rotating) parts of the plane -->
+        <g id="crosshair" opacity="0.18">
+          <path d="M0,-120 L6,-6 L120,0 L6,6 L0,120 L-6,6 L-120,0 L-6,-6 Z" fill="#666" transform="rotate(-15)"/>
+        </g>
+        <!-- rotating parts -->
+        <g id="rose">
+          <g id="ticks"></g>
+          <g id="labels"></g>
+          <path d="M0,-318 l-16,-26 l32,0 Z" fill="#e5322d" transform="rotate(0)" id="northMark"/>
+        </g>
+        <g id="letters"></g>
+        <!-- lubber line + pointer (fixed at top) -->
+        <rect x="-5" y="-462" width="10" height="56" rx="3" fill="#fff"/>
+        <path d="M0,-532 L-26,-486 L26,-486 Z" fill="#fff"/>
+      </svg>
+    </div>
+
+    <div class="speed" id="speedBox">
+      <div id="speed">--</div>
+      <div id="unit">km/h</div>
+    </div>
+  </main>
+
+  <footer class="status" id="status">מחכה ל-GPS…</footer>
+
+  <div class="start" id="start">
+    <h1>Speed Compass</h1>
+    <p>האפליקציה צריכה גישה למיקום (למהירות) ולחיישני התנועה (למצפן).</p>
+    <button id="startBtn">התחל</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
