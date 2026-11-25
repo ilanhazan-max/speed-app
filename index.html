@@ -13,13 +13,30 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="heading">
-    <span id="headingDeg">---°</span><span id="headingDir"></span>
-  </header>
-
   <main class="stage">
     <div class="plane" id="plane">
+      <div class="rim" id="rim"></div>
       <svg id="dial" viewBox="-500 -500 1000 1000" aria-hidden="true">
+        <defs>
+          <radialGradient id="faceGrad" r="0.5">
+            <stop offset="0" stop-color="#161616"/>
+            <stop offset="0.82" stop-color="#050505"/>
+            <stop offset="0.95" stop-color="#000"/>
+          </radialGradient>
+          <linearGradient id="bezelGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8a8a8a"/>
+            <stop offset="0.45" stop-color="#3a3a3a"/>
+            <stop offset="1" stop-color="#1a1a1a"/>
+          </linearGradient>
+          <linearGradient id="innerGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#5a5a5a"/>
+            <stop offset="1" stop-color="#151515"/>
+          </linearGradient>
+        </defs>
+        <!-- face and bezel -->
+        <circle r="478" fill="url(#bezelGrad)"/>
+        <circle r="462" fill="url(#faceGrad)"/>
+        <circle r="462" fill="none" stroke="url(#innerGrad)" stroke-width="3"/>
         <!-- fixed (non-rotating) parts of the plane -->
         <g id="crosshair" opacity="0.18">
           <path d="M0,-120 L6,-6 L120,0 L6,6 L0,120 L-6,6 L-120,0 L-6,-6 Z" fill="#666" transform="rotate(-15)"/>

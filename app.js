@@ -9,8 +9,6 @@ const lettersG = $('letters');
 const speedEl = $('speed');
 const unitEl = $('unit');
 const statusEl = $('status');
-const headingDegEl = $('headingDeg');
-const headingDirEl = $('headingDir');
 
 const DEMO = new URLSearchParams(location.search).has('demo');
 const MAX_TILT = 82; // degrees; keeps the ring from collapsing to a line
@@ -51,6 +49,18 @@ function el(name, attrs, parent) {
   for (const [txt, a] of [['N', 0], ['E', 90], ['S', 180], ['W', 270]]) {
     const t = el('text', { 'data-a': a }, lettersG);
     t.textContent = txt;
+  }
+
+  // Side wall: stacked discs going down from the face, light to dark.
+  const rim = $('rim');
+  const LAYERS = 22;
+  for (let i = LAYERS; i >= 1; i--) {
+    const s = document.createElement('span');
+    s.style.setProperty('--i', i);
+    const k = i / LAYERS;
+    const v = Math.round(70 - 58 * k); // #464646 near the face -> #0c0c0c at the bottom
+    s.style.background = `rgb(${v},${v},${v})`;
+    rim.appendChild(s);
   }
 })();
 
@@ -190,7 +200,6 @@ unitEl.addEventListener('click', () => {
 
 /* ---------- Render loop ---------- */
 
-const DIRS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
 function frame() {
@@ -217,11 +226,6 @@ function frame() {
     t.setAttribute('y', (-Math.cos(a) * 272).toFixed(1));
   }
 
-  if (raw.heading != null) {
-    const shown = Math.round(h) % 360;
-    headingDegEl.textContent = `${shown}°`;
-    headingDirEl.textContent = DIRS[Math.round(shown / 45) % 8];
-  }
   requestAnimationFrame(frame);
 }
 
